@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('config.php');
+include ('config.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['userid'])) {
@@ -74,23 +74,32 @@ if (isset($_GET['notification'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>New Dispatch</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css" />
     <style>
-        input, option, select, input-group, .form-check-label {
+        input,
+        option,
+        select,
+        input-group,
+        .form-check-label {
             cursor: pointer;
         }
+
         label {
             font-weight: bold;
         }
+
         .input-group-append {
             font-weight: normal;
         }
+
         .notification {
             position: fixed;
             top: 20px;
@@ -102,22 +111,31 @@ if (isset($_GET['notification'])) {
             display: none;
             margin-top: 50px;
         }
-        h2{
+
+        h2 {
             color: white;
             border-radius: 10px;
-            padding: 5px;            
+            padding: 5px;
         }
-        #date{
+
+        #date {
             font-weight: bold;
+
+        }
+
+        .origin {
+            text-transform: uppercase;
         }
     </style>
     <link rel="icon" type="image/x-icon" href="./images/super-express-cargo.ico">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">Super Express Cargo Service</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -138,7 +156,7 @@ if (isset($_GET['notification'])) {
     </nav>
 
     <div class="container mt-3">
-     <h2 class="text-center">DISPATCH</h2>
+        <h2 class="text-center">DISPATCH</h2>
         <form id="myForm" method="post" action="createreceipt.php">
             <div class="row">
                 <div class="col-md-6">
@@ -148,14 +166,15 @@ if (isset($_GET['notification'])) {
                     </div>
                     <div class="form-group">
                         <label for="origin">Origin:</label>
-                        <input type="text" class="form-control" id="origin" name="origin" value="<?php echo $userCity; ?>" readonly required />
+                        <input type="text" class="form-control fw-bold origin" id="origin" name="origin"
+                            value="<?php echo $userCity; ?>" readonly required />
                     </div>
                     <div class="form-group">
                         <label for="destination">Destination:</label>
                         <select class="form-control" id="destination" name="destination" required>
                             <option value="">Select destination</option>
                             <?php
-                            $destinationCities = array("Karachi", "Hydrabad", "Lahore", "Islamabad", "Rawalpindi", "Multan", "Gujranwala", "Sialkot", "Gujrat", "Faisalabad", "Sarghoda", "Bahawalpur");
+                            $destinationCities = array("Karachi", "Faisalabad", "Lahore", "Rawalpindi", "Multan", "Peshawar", "Gujranwala", "Hyderabad", "Sialkot", "Gujrat", "Sarghoda", "Bahawalpur");
                             if (($key = array_search($userCity, $destinationCities)) !== false) {
                                 unset($destinationCities[$key]);
                             }
@@ -176,7 +195,8 @@ if (isset($_GET['notification'])) {
                     <div class="form-group">
                         <label for="shipper-contact">Shipper Contact:</label>
                         <div class="input-group">
-                            <input type="tel" class="form-control" id="shipper-contact" name="shipper-contact" required />
+                            <input type="tel" class="form-control" id="shipper-contact" name="shipper-contact"
+                                required />
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <input type="checkbox" id="no-number-checkbox" name="no-number-checkbox" />
@@ -192,10 +212,12 @@ if (isset($_GET['notification'])) {
                     <div class="form-group">
                         <label for="consignee-contact">Consignee Contact:</label>
                         <div class="input-group">
-                            <input type="tel" class="form-control" id="consignee-contact" name="consignee-contact" required />
+                            <input type="tel" class="form-control" id="consignee-contact" name="consignee-contact"
+                                required />
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="no-number-consignee-checkbox" name="no-number-consignee-checkbox" />
+                                    <input type="checkbox" id="no-number-consignee-checkbox"
+                                        name="no-number-consignee-checkbox" />
                                     <label for="no-number-consignee-checkbox" class="form-check-label">No Number</label>
                                 </div>
                             </div>
@@ -233,33 +255,37 @@ if (isset($_GET['notification'])) {
                         <input type="number" class="form-control" id="local-charges" name="local-charges" required />
                     </div>
                     <div class="form-group">
-                        <label for="total-amount">Total Amount: <span class="text-success fst-italic">(auto calculate)</span></label>
-                        <input type="number" class="form-control text-success fw-bold" id="total-amount" name="total-amount" required />
+                        <label for="total-amount">Total Amount: <span class="text-success fst-italic">(auto
+                                calculate)</span></label>
+                        <input type="number" class="form-control text-success fw-bold" id="total-amount"
+                            name="total-amount" required />
                     </div>
                     <br>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block" name="submit">Create New Dispatch</button>
+                        <button type="submit" class="btn btn-primary btn-block" name="submit">Create New
+                            Dispatch</button>
                     </div>
                 </div>
             </div>
         </form>
-        <?php include('dispatch_list_bottom.php'); ?>
+        <?php include ('dispatch_list_bottom.php'); ?>
     </div>
     <div class="notification" id="notification"></div>
     <script src="./createreceipt.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const notification = document.getElementById('notification');
-    const message = "<?php echo $notification; ?>";
-    if (message) {
-        notification.textContent = message;
-        notification.style.display = 'block';
-        setTimeout(function() {
-            notification.style.display = 'none';
-        }, 2000);
-    }
-});
+        document.addEventListener('DOMContentLoaded', function () {
+            const notification = document.getElementById('notification');
+            const message = "<?php echo $notification; ?>";
+            if (message) {
+                notification.textContent = message;
+                notification.style.display = 'block';
+                setTimeout(function () {
+                    notification.style.display = 'none';
+                }, 2000);
+            }
+        });
     </script>
 </body>
+
 </html>

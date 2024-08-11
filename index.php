@@ -1,207 +1,126 @@
-<?php
-include('config.php');
-//session_start();
-
-// Check if user is logged in
-if(!isset($_SESSION['userid'])){
-    header('location:login.php');
-    exit();
-}
-
-$userid = $_SESSION['userid'];
-$name = $_SESSION['name'];
-$city = $_SESSION['city'];
-$office = $_SESSION['office'];
-// Query to get the total pending deliveries
-$query = "SELECT COUNT(s.shipment_id) as total_pending 
-          FROM shipments s
-          JOIN users u ON s.destination = u.city
-          WHERE u.userid = ? AND s.status = 'dispatched'";
-          
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $userid);
-$stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
-$total_pending = $row['total_pending'];
-
-
-$sql = $con->prepare("SELECT SUM(s.total_amount) AS totalcod 
-                      FROM shipments s
-                      JOIN users u ON s.origin = u.city
-                      WHERE u.userid = ? 
-                      AND s.mode_of_payment = 'COD'
-                      AND MONTH(s.date) = MONTH(CURDATE()) 
-                      AND YEAR(s.date) = YEAR(CURDATE())");
-
-if ($sql === false) {
-    die('Prepare failed: ' . htmlspecialchars($con->error));
-}
-
-$userId = intval($userid); // Ensure $userId is an integer
-$sql->bind_param("i", $userid);
-
-if (!$sql->execute()) {
-    die('Execute failed: ' . htmlspecialchars($sql->error));
-}
-
-$result = $sql->get_result();
-
-if ($result === false) {
-    die('Get result failed: ' . htmlspecialchars($sql->error));
-}
-
-$row = $result->fetch_assoc();
-$totalCod = $row['totalcod'] !== null ? $row['totalcod'] : 0;
-
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <link rel="icon" type="image/x-icon" href="./images/super-express-cargo.ico">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+</head>
 
-    <style>
-      .dashboard-card {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 200px; /* Adjust as needed */
-      }
-      .dashboard-card h2 {
-        font-size: 2rem;
-        margin-bottom: 10px;
-        color: black;
-      }
-      .dashboard-card p {
-        font-size: 1.5rem;
-        color:maroon;
-        font-weight: 700;
-      }
-      .dashboard-card p.cod{
-        color: seagreen;
-      }
-      @media (max-width: 767px) {
-            .container {
-                padding: 10px;
-            }
-            h1 {
-                font-size: 1.5rem; /* Decrease the size of h1 */
-                margin-top: 20px;
-            }
-            h2 {
-                font-size: 1.2rem; /* Decrease the size of h2 */
-            }
-            .dashboard-card {
-                padding: 10px;
-            }
-            .button-container {
-                flex-direction: column;
-            }
-           
-        }
-    </style>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">Super Express Cargo Service</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="./createreceipt.php">Dispatch</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./report.php">Delivery</a>
-            </li>
-            <li class="nav-item">
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="logout.php">Logout</a>
-            </li>
-          </ul>
+<body>
+    <div class="container text-center">
+        <img src="./admin/images/super-express-cargo.png" alt="Super Express Cargo Logo" class="logo" />
+        <h1 class="display-4">Super Express Cargo</h1>
+        <form class="mt-4" method="post" action="index.php">
+            <div class="form-group mb-3">
+                <label for="cnNumber">Track Your Shipment</label>
+                <input type="text" class="form-control" id="cnNumber" name="cnNumber"
+                    placeholder="Enter Receipt Number" />
+            </div>
+            <button type="submit" class="btn btn-primary">Track Shipment</button>
+        </form>
+        <div>
+            <!-- Include database config -->
+            <?php include './admin/config.php';
+
+
+
+            ?>
+
+            <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+                <?php
+                // Get CN number from POST request
+                $cnNumber = $_POST['cnNumber'];
+
+                // Prepare and execute query
+                $stmt = $con->prepare("SELECT status, shipper_name, consignee_name FROM shipments WHERE receipt_no = ?");
+                $stmt->bind_param("s", $cnNumber);
+                $stmt->execute();
+                $stmt->store_result();
+
+                // Check if any result is found
+                if ($stmt->num_rows > 0) {
+                    $stmt->bind_result($status, $shipperName, $consigneeName);
+                    $stmt->fetch();
+
+                    // Determine status class
+                    $statusClass = '';
+                    if ($status === 'DISPATCHED') {
+                        $statusClass = 'status-dispatched';
+                    } elseif ($status === 'DELIVERED') {
+                        $statusClass = 'status-delivered';
+                    }
+                    ?>
+                    <!-- <div class="card mt-4 mx-auto" style="max-width: 600px;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between w-100">
+                                <div class="w-50 text-start">
+                                    <p class="card-text"><strong>Receipt No:</strong></p>
+                                    <p class="card-text"><strong>Status:</strong></p>
+                                    <p class="card-text"><strong>Consignee:</strong></p>
+                                    <p class="card-text"><strong>Shipper:</strong></p>
+                                </div>
+                                <div class="w-50 text-end">
+                                    <p class="card-text fw-bold reciept_value"><?php echo htmlspecialchars($cnNumber); ?></p>
+                                    <p class="card-text fw-bold <?php echo $statusClass; ?>">
+                                        <?php echo htmlspecialchars($status); ?>
+                                    </p>
+                                    <p class="card-text"><?php echo htmlspecialchars($consigneeName); ?></p>
+                                    <p class="card-text"><?php echo htmlspecialchars($shipperName); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="table-responsive mt-4 mx-auto" style="max-width: 600px;">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Receipt No:</th>
+                                    <td class="fw-bold receipt_value"><?php echo htmlspecialchars($cnNumber); ?></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Status:</th>
+                                    <td class="fw-bold <?php echo $statusClass; ?>">
+                                        <?php echo htmlspecialchars($status); ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Consignee:</th>
+                                    <td><?php echo htmlspecialchars($consigneeName); ?></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Shipper:</th>
+                                    <td><?php echo htmlspecialchars($shipperName); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <?php
+                } else {
+                    echo '<div class="alert alert-danger mt-4" role="alert">';
+                    echo 'No records found for CN Number ' . htmlspecialchars($cnNumber);
+                    echo '</div>';
+                }
+
+                $stmt->close();
+                $con->close();
+                ?>
+            <?php endif; ?>
+
         </div>
-      </div>
-    </nav>
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Main Karachi Office: G-56, Deans Market, Main Tariq Road, Karachi</p>
+            <p>Contact: 0321-9285851, 0321-8756687</p>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</body>
 
-    <div class="container" style="color:white;">
-      <h1 class="center" style="color:white;">Welcome to Super Express</h1>
-      <h2 class="center">
-        Hello 
-        <?php echo htmlspecialchars($name); ?>
-      </h2>
-      
-      <h2 class="center">
-        Station:
-        <?php echo htmlspecialchars($city); ?>
-      </h2>
-      
-      
-      <!-- Dashboard Card for Pending Deliveries -->
-  <div class="row justify-content-center">
-    <!-- Card for Total Pending Deliveries -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <a href="./report.php" class="text-decoration-none">
-        <div class="dashboard-card text-center">
-          <h2>Total Pending Deliveries</h2>
-          <p><?php echo $total_pending; ?></p>
-        </div>
-      </a>
-    </div>
-
-    <!-- Card for Total COD From Karachi -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <a href="" class="text-decoration-none">
-        <div class="dashboard-card text-center">
-          <h2>Total COD from <?php echo $city?></h2>
-          <p class="cod"><?php echo $totalCod; ?></p>
-        </div>
-      </a>
-    </div>
-  </div>
-      <div class="button-container">
-        <a href="./createreceipt.php"
-          ><button class="btn btn-success">Dispatch</button></a
-        >
-        <a href="./report.php"
-          ><button class="btn btn-primary">Delivery</button></a
-        >
-       
-        <a href="./logout.php"
-          ><button class="btn btn-danger">Logout</button></a
-        >
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
 </html>

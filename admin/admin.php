@@ -1,7 +1,7 @@
 <?php
-  include('admin_function.php');
+  include('./admin_function.php');
   check_admin();
-  include('config.php');
+  include('./config.php');
   // Assuming you have a database connection in 'admin_function.php'
 $totalPendingDeliveries = 0;
 $totalcodfromkhi=0;

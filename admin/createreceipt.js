@@ -11,6 +11,25 @@ document.addEventListener("DOMContentLoaded", function () {
   localChargesInput.addEventListener("input", calculateTotalAmount);
   packingInput.addEventListener("input", calculateTotalAmount);
 
+  var city_select = "";
+  var date_select = "";
+
+  if (sessionStorage.getItem("city_select")) {
+    city_select = sessionStorage.getItem("city_select");
+  }
+
+  if (city_select != "") {
+    document.getElementById("destination").value = city_select;
+  }
+
+  if (sessionStorage.getItem("date_select")) {
+    date_select = sessionStorage.getItem("date_select");
+  }
+
+  if (date_select != "") {
+    document.getElementById("date").value = date_select;
+  }
+
   function calculateTotalAmount() {
     const weight = parseFloat(weightInput.value) || 0;
     const rate = parseFloat(rateInput.value) || 0;
@@ -31,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const randomNumber = generateRandomNumber(7);
 
     // Format the receipt number as "SUPER-random-Destination"
+    localStorage.setItem("city_select", destinationValue);
     const receiptNumber = `SUPER-${randomNumber}-${destinationValue}`;
 
     receiptInput.value = receiptNumber;
@@ -69,5 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
       consigneeContactInput.value = "";
       consigneeContactInput.disabled = false;
     }
+  });
+
+  const date_element = document.getElementById("date");
+
+  date_element.addEventListener("change", () => {
+    console.log("Hello");
+    localStorage.setItem("date_select", date_element.value);
   });
 });
