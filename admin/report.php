@@ -1,5 +1,5 @@
 <?php
-include ('config.php');
+include('config.php');
 // Start session at the very beginning
 
 // Check if user is logged in
@@ -17,7 +17,7 @@ $userid = $_SESSION['userid'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery</title>
+    <title>Delivery | Super Express</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -112,6 +112,7 @@ $userid = $_SESSION['userid'];
                         <th>Consignee Contact</th>
                         <th>Weight</th>
                         <th>Pcs</th>
+                        <th>Mode of Payment</th>
                         <th>Rate</th>
                         <th>Local</th>
                         <th>Packing</th>
@@ -121,7 +122,7 @@ $userid = $_SESSION['userid'];
                 </thead>
                 <tbody id="table-body">
                     <?php
-                    include ('config.php');
+                    include('config.php');
 
                     $query = "SELECT 
                             s.shipment_id,
@@ -181,6 +182,7 @@ $userid = $_SESSION['userid'];
                             <td><?php echo htmlspecialchars($row['consignee_contact']); ?></td>
                             <td><?php echo htmlspecialchars($row['weight']); ?></td>
                             <td><?php echo htmlspecialchars($row['pieces']); ?></td>
+                            <td><?php echo htmlspecialchars($row['mode_of_payment']); ?></td>
                             <td><?php echo htmlspecialchars($row['rate']); ?></td>
                             <td><?php echo htmlspecialchars($row['local_charges']); ?></td>
                             <td><?php echo htmlspecialchars($row['packing']); ?></td>
@@ -236,7 +238,7 @@ $userid = $_SESSION['userid'];
 
             // Add click event listener to visible rows
             $("#myTable tbody").on("click", "tr", function () {
-                var shipmentId = $(this).find("td").eq(5).text();
+                var shipmentId = $(this).find("td").eq(4).text();
                 var url = "print_invoice.php?id=" + shipmentId;
                 window.open(url, "_blank");
             });

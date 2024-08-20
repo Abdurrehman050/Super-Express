@@ -1,5 +1,5 @@
 <?php
-include ('config.php');
+include('config.php');
 //session_start(); 
 // if (session_status() == PHP_SESSION_NONE) {
 //   session_start();
@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Page</title>
+  <title>Login | Super Express</title>
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Google Fonts -->
@@ -102,8 +102,8 @@ if (isset($_POST['login'])) {
     }
 
     .logo {
-      width: 100px;
-      /* Set the width to 100px */
+      max-width: 150px;
+      margin: 20px auto;
       margin-bottom: 1rem;
       /* Add bottom margin */
     }
@@ -149,7 +149,7 @@ if (isset($_POST['login'])) {
         <h1>Super Express Cargo</h1>
         <div class="card login-card">
           <div class="card-body">
-            <h5 class="card-title text-center">Login</h5>
+            <h5 class="card-title text-center">Office Login</h5>
             <br>
             <form id="login" method="post" action="login.php">
               <div class="form-group">
@@ -177,13 +177,13 @@ if (isset($_POST['login'])) {
       </div>
     </div>
     <a href="javascript:void(0);" onclick="showAlert()">
-      <div class="footer">Developed by Kabeer</div>
+      <div class="footer">Developed by Kabeer Khan</div>
     </a>
     <!-- Bootstrap JS and dependencies -->
     <!-- <script src="login.js"></script> -->
     <script>
       function showAlert() {
-        alert("Developed by Kabeer\nContact: 03138904098"); // Replace with actual contact info
+        alert("Developed by: Kabeer Khan\nContact: 03138904098\nEmail:kabeershahzad01@gmail.com"); // Replace with actual contact info
       }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -32,7 +32,7 @@
           // Create the QR code
           const qr = new QRious({
             element: document.getElementById("qrcode"),
-            value: `${shipmentData["receipt_no"]}, Thank you for choosing Super Express`, // Use the receipt number from shipmentData
+            value: `${shipmentData["receipt_no"]}`, // Use the receipt number from shipmentData
           });
 
           // Create the PDF document definition
@@ -258,7 +258,14 @@
                     ],
                     [
                       {
-                        text: `Tariq Road Office: G-56, Deans Market, Main Tariq Road, Karachi 0321-8756687\nOrangi Town Office: Shop 2, Plot ST-19/1, Sector 8L, Orangi Town 0370-6415073\nSaddar Office: Shop F-12 ,1st Floor, Madina Center, Zaib un Nisa Street, Saddar 0300-7086470`,
+                        text: [
+                          { text: "Tariq Road Office: ", bold: true },
+                          "G-56, Deans Market, Main Tariq Road, Karachi 0321-8756687\n",
+                          { text: "Orangi Town Office: ", bold: true },
+                          "Shop 2, Plot ST-19/1, Sector 8L, Orangi Town 0370-6415073\n",
+                          { text: "Saddar Office: ", bold: true },
+                          "Shop F-12, 1st Floor, Madina Center, Zaib un Nisa Street, Saddar 0300-7086470"
+                        ],
                         alignment: "center",
                         colSpan: 3, // Span the entire width of the table
                       },
@@ -504,10 +511,17 @@
                     ],
                     [
                       {
-                        text: `Tariq Road Office: G-56, Deans Market, Main Tariq Road, Karachi 0321-8756687\nOrangi Town Office: Shop 2, Plot ST-19/1, Sector 8L, Orangi Town 0370-6415073\nSaddar Office: Shop F-12 ,1st Floor, Madina Center, Zaib un Nisa Street, Saddar 0300-7086470`,
+                        text: [
+                          { text: "Tariq Road Office: ", bold: true },
+                          "G-56, Deans Market, Main Tariq Road, Karachi 0321-8756687\n",
+                          { text: "Orangi Town Office: ", bold: true },
+                          "Shop 2, Plot ST-19/1, Sector 8L, Orangi Town 0370-6415073\n",
+                          { text: "Saddar Office: ", bold: true },
+                          "Shop F-12, 1st Floor, Madina Center, Zaib un Nisa Street, Saddar 0300-7086470"
+                        ],
                         alignment: "center",
                         colSpan: 3, // Span the entire width of the table
-                      },
+                      }
                     ],
                   ],
                 },

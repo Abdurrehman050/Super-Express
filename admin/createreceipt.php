@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ('config.php');
+include('config.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['userid'])) {
@@ -46,6 +46,7 @@ if (isset($_POST['submit'])) {
         $consignee_contact = $_POST['consignee-contact'];
     }
 
+
     try {
         $stmt = "INSERT INTO shipments (date, origin, destination, receipt_no, shipper_name, shipper_contact, consignee_name, consignee_contact, weight, pieces, mode_of_payment, rate, local_charges, packing, total_amount, office, status) 
                  VALUES ('$date', '$origin', '$destination', '$receipt', '$shipper_name', '$shipper_contact', '$consignee_name', '$consignee_contact', '$weight', '$pieces', '$mode_of_payment', '$rate', '$local_charges', '$packing', '$total_amount', '$userOffice', 'DISPATCHED')";
@@ -79,7 +80,7 @@ if (isset($_GET['notification'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Dispatch</title>
+    <title>Dispatch | Super Express</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css" />
@@ -268,7 +269,7 @@ if (isset($_GET['notification'])) {
                 </div>
             </div>
         </form>
-        <?php include ('dispatch_list_bottom.php'); ?>
+        <?php include('dispatch_list_bottom.php'); ?>
     </div>
     <div class="notification" id="notification"></div>
     <script src="./createreceipt.js"></script>

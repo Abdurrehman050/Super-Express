@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const packingInput = document.getElementById("packing");
   const totalAmountInput = document.getElementById("total-amount");
 
+  // Focus on the "Shipper Name" input field
+  document.getElementById("shipper-name").focus();
+
   // Add event listeners to the necessary fields
   weightInput.addEventListener("input", calculateTotalAmount);
   rateInput.addEventListener("input", calculateTotalAmount);
@@ -50,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const randomNumber = generateRandomNumber(7);
 
     // Format the receipt number as "SUPER-random-Destination"
-    localStorage.setItem("city_select", destinationValue);
+    sessionStorage.setItem("city_select", destinationValue);
     const receiptNumber = `SUPER-${randomNumber}-${destinationValue}`;
 
     receiptInput.value = receiptNumber;
@@ -95,6 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   date_element.addEventListener("change", () => {
     console.log("Hello");
-    localStorage.setItem("date_select", date_element.value);
+    sessionStorage.setItem("date_select", date_element.value);
   });
 });
