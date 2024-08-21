@@ -32,7 +32,7 @@
           // Create the QR code
           const qr = new QRious({
             element: document.getElementById("qrcode"),
-            value: `${shipmentData["receipt_no"]}`, // Use the receipt number from shipmentData
+            value: `www.superexpresscargo.com`, // Combine the link with the receipt number
           });
 
           // Create the PDF document definition
@@ -42,11 +42,21 @@
                 columns: [
                   {
                     width: 'auto',
-                    text: "Super Express",
-                    alignment: "left",
-                    bold: true,
-                    fontSize: 16,
+                    text: [
+                      {
+                        text: "Super Express",
+                        bold: true,
+                        fontSize: 16,
 
+                      },
+                      {
+                        text: "\nDomestic Cargo Service",
+                        italics: true,
+                        fontSize: 12,
+
+                      }
+                    ],
+                    alignment: "left",
                   },
                   {
                     width: '*',
@@ -58,7 +68,6 @@
                         fontSize: 14,
                         bold: true,
 
-
                       },
                       {
                         text: formattedDate,
@@ -67,6 +76,8 @@
                         fontSize: 13,
                       },
                     ],
+                    margin: [0, 0, 22, 0], // Margins: [left, top, right, bottom]
+
                   },
                   {
                     width: 'auto',
@@ -75,6 +86,7 @@
                     bold: true,
                   },
                 ],
+
               },
               {
                 table: {
@@ -144,11 +156,7 @@
                             fontSize: 11,
 
                           },
-                          // {
-                          //   text: `\nSignature:__________________`,
-                          //   alignment: "left",
-                          //   bold:true,
-                          // },
+
                         ],
                         alignment: "left",
                       },
@@ -172,12 +180,12 @@
                             decoration: "underline",
                             alignment: "center",
                             bold: true,
-                            fontSize: "11",
+                            fontSize: 11,
                           },
                           {
                             text: `${shipmentData["destination"].toUpperCase()}`,
                             alignment: "center",
-                            fontSize: "14",
+                            fontSize: 14,
                           },
                         ],
                       },
@@ -296,10 +304,20 @@
                 columns: [
                   {
                     width: 'auto',
-                    text: "Super Express",
+                    text: [
+                      {
+                        text: "Super Express",
+                        bold: true,
+                        fontSize: 16,
+
+                      },
+                      {
+                        text: "\nDomestic Cargo Service",
+                        italics: true,
+                        fontSize: 12,
+                      }
+                    ],
                     alignment: "left",
-                    bold: true,
-                    fontSize: 16,
                   },
                   {
                     width: '*',
@@ -320,6 +338,8 @@
                         fontSize: 13,
                       },
                     ],
+                    margin: [0, 0, 22, 0], // Margins: [left, top, right, bottom]
+
                   },
                   {
                     width: 'auto',
@@ -563,8 +583,9 @@
           pdfDocGenerator.getBlob((blob) => {
             const url = URL.createObjectURL(blob);
             const printWindow = window.open(url, "_self"); // Open in a new tab
+
             printWindow.onload = () => {
-              printWindow.print();
+              // printWindow.print();
               printWindow.onafterprint = () => {
                 URL.revokeObjectURL(url);
                 printWindow.close();
