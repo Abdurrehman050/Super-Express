@@ -1,17 +1,28 @@
-<?php include ('./config.php') ?>
-<!DOCTYPE html>
+<?php
+include('./config.php');
+// Start session at the very beginning
+
+// Check if user is logged in
+if (!isset($_SESSION['userid'])) {
+    header('location:login.php');
+    exit();
+}
+
+$userid = $_SESSION['userid'];
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacts</title>
+    <title>Customers | Super Express</title>
     <style>
         .container {
             margin-top: 100px;
         }
     </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="icon" type="image/x-icon" href="./images/super-express-cargo.ico">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
@@ -61,24 +72,24 @@
                 <tbody id="mtTable">
                     <?php
                     $query = "SELECT DISTINCT
-                    'Shipper' AS customer_type,
-                    s.shipper_name AS name,
-                    s.shipper_contact AS contact
-                  FROM 
-                    shipments s
-                  WHERE 
-                    s.shipper_name <> 'self'
-                  UNION ALL
-                  SELECT DISTINCT
-                    'Consignee' AS customer_type,
-                    s.consignee_name AS name,
-                    s.consignee_contact AS contact
-                  FROM 
-                    shipments s
-                  WHERE 
-                    s.consignee_name <> 'self'
-                  ORDER BY 
-                    customer_type, name;";
+                                'Shipper' AS customer_type,
+                                s.shipper_name AS name,
+                                s.shipper_contact AS contact
+                                FROM 
+                                shipments s
+                                WHERE 
+                                s.shipper_name <> 'self'
+                                UNION
+                                SELECT DISTINCT
+                                'Consignee' AS customer_type,
+                                s.consignee_name AS name,
+                                s.consignee_contact AS contact
+                                FROM 
+                                shipments s
+                                WHERE 
+                                s.consignee_name <> 'self'
+                                ORDER BY 
+                                customer_type, name;";
                     $stmt = mysqli_prepare($con, $query);
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
@@ -101,6 +112,8 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
