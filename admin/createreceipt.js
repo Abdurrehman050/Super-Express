@@ -4,9 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const localChargesInput = document.getElementById("local-charges");
   const packingInput = document.getElementById("packing");
   const totalAmountInput = document.getElementById("total-amount");
+  
+       // Focus on the "Shipper Name" input field
+    document.getElementById("shipper-name").focus();
 
-  // Focus on the "Shipper Name" input field
-  document.getElementById("shipper-name").focus();
 
   // Add event listeners to the necessary fields
   weightInput.addEventListener("input", calculateTotalAmount);
@@ -14,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   localChargesInput.addEventListener("input", calculateTotalAmount);
   packingInput.addEventListener("input", calculateTotalAmount);
 
-  var city_select = "";
+ var city_select = "";
   var date_select = "";
 
   if (sessionStorage.getItem("city_select")) {

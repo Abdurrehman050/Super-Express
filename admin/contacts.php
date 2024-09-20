@@ -20,6 +20,11 @@ $userid = $_SESSION['userid'];
         .container {
             margin-top: 100px;
         }
+        /*h2 {*/
+        /*    color: white;*/
+        /*    border-radius: 10px;*/
+        /*    padding: 5px;*/
+        /*}*/
     </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
     <link rel="icon" type="image/x-icon" href="./images/super-express-cargo.ico">
@@ -45,7 +50,7 @@ $userid = $_SESSION['userid'];
                         <a class="nav-link" href="./report.php">Delivery</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./contacts.php">Contacts</a>
+                        <a class="nav-link" href="./contacts.php">Customers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Logout</a>
@@ -55,8 +60,9 @@ $userid = $_SESSION['userid'];
             </div>
         </div>
     </nav>
-    <div class="container">
+    <div class="container mt-3">
 
+    <h2 class="text-center">CUSTOMER</h2>
 
         <div class="table-responsive mt-3">
 
@@ -64,7 +70,7 @@ $userid = $_SESSION['userid'];
                 <thead>
                     <tr class="text-center">
                         <th>Customer Name</th>
-                        <th>Phone</th>
+                        <th>Phone #</th>
 
 
                     </tr>
@@ -113,7 +119,6 @@ $userid = $_SESSION['userid'];
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>

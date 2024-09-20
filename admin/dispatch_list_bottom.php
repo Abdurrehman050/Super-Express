@@ -1,6 +1,6 @@
 <?php
 // session_start(); // Uncomment this line
-include('config.php');
+include ('config.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['userid'])) {
@@ -70,6 +70,9 @@ $userid = $_SESSION['userid'];
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./report.php">Delivery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./contacts.php">Customers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Logout</a>
@@ -167,11 +170,12 @@ $userid = $_SESSION['userid'];
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
     <script>
         $(document).ready(function () {
             const deliverButtons = document.querySelectorAll(".delete-btn");

@@ -4,9 +4,9 @@ if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
-$con = new mysqli('localhost', 'root', '') or die("Unable to connect");
+$con = new mysqli('localhost', 'u181616879_superexp', 'Superkabeer@1231') or die("Unable to connect");
 
-if (!mysqli_select_db($con, 'superexp_db')) {
+if (!mysqli_select_db($con, 'u181616879_superexpdb')) {
     echo "Database not selected";
 }
 ?>

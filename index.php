@@ -85,7 +85,7 @@
                     $stmt->bind_result($date, $status, $shipperName, $consigneeName);
                     $stmt->fetch();
                     $statusClass = ($status === 'DISPATCHED') ? 'status-dispatched' : (($status === 'DELIVERED') ? 'status-delivered' : '');
-                    ?>
+                ?>
                     <div class="table-responsive mt-4">
                         <table class="table">
                             <tbody>
@@ -95,14 +95,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Dispatch Date:</th>
-                                    <td class="fw-bold receipt_value">
-                                        <?php echo htmlspecialchars(date('d-m-Y', strtotime($date))); ?>
-                                    </td>
+                                    <td class="fw-bold receipt_value"><?php echo htmlspecialchars(date('d-m-Y', strtotime($date))); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Status:</th>
-                                    <td class="fw-bold <?php echo $statusClass; ?>"><?php echo htmlspecialchars($status); ?>
-                                    </td>
+                                    <td class="fw-bold <?php echo $statusClass; ?>"><?php echo htmlspecialchars($status); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Consignee:</th>
@@ -115,7 +112,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <?php
+                <?php
                 } else {
                     echo '<div class="alert alert-danger mt-4" role="alert">';
                     echo 'No records found for CN Number ' . htmlspecialchars($cnNumber);

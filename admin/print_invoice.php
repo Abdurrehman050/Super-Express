@@ -50,7 +50,7 @@
 
                       },
                       {
-                        text: "\nDomestic Cargo Service",
+                        text: "\nCargo & Courier Service",
                         italics: true,
                         fontSize: 12,
 
@@ -312,7 +312,7 @@
 
                       },
                       {
-                        text: "\nDomestic Cargo Service",
+                        text: "\nCargo & Courier Service",
                         italics: true,
                         fontSize: 12,
                       }
