@@ -44,7 +44,10 @@ $userid = $_SESSION['userid'];
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="./createreceipt.php">Dispatch</a>
+                        <a class="nav-link" href="./createreceipt.php">Create New Dispatch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dispatch_list_bottom.php">Dispatch</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./report.php">Delivery</a>

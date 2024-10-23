@@ -64,7 +64,10 @@ body {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="./createreceipt.php">Dispatch</a>
+                        <a class="nav-link" href="./createreceipt.php">Create New Dispatch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dispatch_list_bottom.php">Dispatch</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./report.php">Delivery</a>
@@ -239,27 +242,30 @@ body {
   });
 
   document.getElementById("export-btn").addEventListener("click", function () {
-    var visibleRows = Array.from(
-      document.querySelectorAll("#myTable tbody tr")
-    ).filter(function (row) {
-      return row.style.display !== "none";
-    });
-    var filteredTable = document.createElement("table");
-    filteredTable.innerHTML = document.getElementById("myTable").innerHTML;
-    var existingTBody = filteredTable.querySelector("tbody");
-    if (existingTBody) {
-      filteredTable.removeChild(existingTBody);
-    }
-    var newTBody = document.createElement("tbody");
-    visibleRows.forEach(function (row) {
-      newTBody.appendChild(row.cloneNode(true));
-    });
-    filteredTable.appendChild(newTBody);
-    var wb = XLSX.utils.table_to_book(filteredTable);
+    // Get visible rows only
+    var visibleRows = Array.from(document.querySelectorAll("#myTable tbody tr"))
+        .filter(row => row.style.display !== "none")
+        .map(row => Array.from(row.querySelectorAll("td")).map(cell => cell.innerText));
+
+    // Add title 'Dispatch' as the first row
+    visibleRows.unshift(["Dispatch"]);
+
+    // Create a worksheet from visible rows
+    var ws = XLSX.utils.aoa_to_sheet(visibleRows);
+
+    // Set column widths to auto-fit
+    ws['!cols'] = visibleRows[0].map((_, i) => ({
+        wch: Math.max(...visibleRows.map(row => (row[i] || '').length))
+    }));
+
+    // Create workbook and append the worksheet
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Dispatch Data");
+
+    // Export to Excel
     var wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    var blob = new Blob([wbout], { type: "application/octet-stream" });
-    saveAs(blob, "table_data.xlsx");
-  });
+    saveAs(new Blob([wbout], { type: "application/octet-stream" }), "Delivery SuperExpress.xlsx");
+});
 });
 
     

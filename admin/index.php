@@ -139,8 +139,11 @@ $totalCod = $row['totalcod'] !== null ? $row['totalcod'] : 0;
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="./createreceipt.php">Dispatch</a>
-            </li>
+                        <a class="nav-link" href="./createreceipt.php">Create New Dispatch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dispatch_list_bottom.php">Dispatch</a>
+                    </li>
             <li class="nav-item">
               <a class="nav-link" href="./report.php">Delivery</a>
             </li>
@@ -182,7 +185,7 @@ $totalCod = $row['totalcod'] !== null ? $row['totalcod'] : 0;
 
     <!-- Card for Total COD From Karachi -->
     <div class="col-lg-4 col-md-6 mb-4">
-      <a href="" class="text-decoration-none">
+      <a href="./dispatch_list_bottom.php" class="text-decoration-none">
         <div class="dashboard-card text-center">
           <h2>COD from <?php echo $city?> </h2>
           <p class="cod"><?php echo'Rs '.number_format( $totalCod); ?></p>
@@ -191,7 +194,7 @@ $totalCod = $row['totalcod'] !== null ? $row['totalcod'] : 0;
     </div>
   </div>
       <div class="button-container">
-        <a href="./createreceipt.php"
+        <a href="./dispatch_list_bottom.php"
           ><button class="btn btn-success">Dispatch</button></a
         >
         <a href="./report.php"

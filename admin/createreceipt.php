@@ -79,7 +79,7 @@ if (isset($_GET['notification'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dispatch | Super Express</title>
+    <title>New Dispatch | Super Express</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css" />
     <style>
@@ -104,7 +104,6 @@ if (isset($_GET['notification'])) {
             margin-top: 50px;
         }
         h2{
-            color: white;
             border-radius: 10px;
             padding: 5px;            
         }
@@ -128,7 +127,10 @@ if (isset($_GET['notification'])) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="./createreceipt.php">Dispatch</a>
+                        <a class="nav-link" href="./createreceipt.php">Create New Dispatch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dispatch_list_bottom.php">Dispatch</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./report.php">Delivery</a>
@@ -160,7 +162,7 @@ if (isset($_GET['notification'])) {
                     </div>
                     <div class="form-group">
                         <label for="destination">Destination:</label>
-                        <select class="form-control" id="destination" name="destination" required>
+                        <select class="form-control fw-bold" id="destination" name="destination" required>
                             <option value="">Select destination</option>
                             <?php
                             $destinationCities = array("Karachi","Faisalabad", "Lahore", "Rawalpindi", "Multan","Peshawar", "Gujranwala","Hyderabad", "Sialkot", "Gujrat", "Sarghoda", "Bahawalpur");
@@ -253,7 +255,6 @@ if (isset($_GET['notification'])) {
                 </div>
             </div>
         </form>
-        <?php include('dispatch_list_bottom.php'); ?>
     </div>
     <div class="notification" id="notification"></div>
     <script src="./createreceipt.js"></script>
